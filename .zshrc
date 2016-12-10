@@ -22,15 +22,7 @@ if ! zplug check --verbose; then
 fi
 
 zplug load --verbose
-# anyenv
-if [ -d $HOME/.anyenv ] ; then
-  export PATH="$HOME/.anyenv/bin:$PATH"
-  eval "$(anyenv init -)"
-  for D in `ls $HOME/.anyenv/envs`
-  do
-    export PATH="$HOME/.anyenv/envs/$D/shims'$PATH"
-  done
-fi
+source ~/.zprofile
 
 # Completion
 zstyle ':completion:*' completer _complete _match _approximate

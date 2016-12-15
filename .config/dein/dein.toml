@@ -1,5 +1,4 @@
 # Basic
-
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
@@ -12,7 +11,6 @@ hook_add = '''
 '''
 
 # Colors
-
 [[plugins]] # hybrid
 repo = 'w0ng/vim-hybrid'
 

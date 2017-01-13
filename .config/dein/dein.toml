@@ -16,3 +16,6 @@ repo = 'w0ng/vim-hybrid'
 
 [[plugins]] # solarized
 repo = 'altercation/vim-colors-solarized'
+
+[[plugins]] # NERDTree
+repo = 'scrooloose/nerdtree'

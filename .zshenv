@@ -3,10 +3,12 @@ setopt no_global_rcs
 if [ -z $ZSH_ENV_LOADED ] ; then
   export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/redis-2.6/bin
   export DOTFILES=$HOME/.dotfiles
+  export VIM=/usr/local/Cellar/neovim/0.1.7/share/nvim
   # anyenv
   if [ -d $HOME/.anyenv ] ; then
     export PATH="$HOME/.anyenv/bin:$PATH"
     eval "$(anyenv init - --no-rehash)"
+    alias brew="env PATH=${PATH/\/Users\/ryota\/.anyenv\/envs\/*env\/shims:/} brew"
     for D in `ls $HOME/.anyenv/envs`
     do
       export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
@@ -24,7 +26,7 @@ if [ -z $ZSH_ENV_LOADED ] ; then
   export LANG=ja_JP.UTF-8
   export ZSH_ENV_LOADED="1"
 else
-  print "skipped to read .zshrc \n"
+  print "skipped to read .zshenv \n"
 fi
 
 typeset -U path PATH

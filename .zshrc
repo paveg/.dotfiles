@@ -1,3 +1,7 @@
+if [ $DOTFILES/.zshrc -nt $HOME/.zshrc.zwc ] ; then
+  zcompile $HOME/.zshrc
+fi
+
 source ~/.zplug/init.zsh
 
 # define plugin
@@ -14,15 +18,15 @@ zplug 'b4b4r07/dotfiles', as:command, of:bin/peco-tmux
 zplug 'chrissicool/zsh-256color', use:'zsh-256color.plugin.zsh'
 # zplug 'yonchu/zsh-vcs-prompt'
 # install
-if ! zplug check --verbose; then
-  printf 'Install? [y/N]: '
-  if read -q; then
-    echo; zplug install
-  fi
-fi
+
+#if ! zplug check --verbose; then
+#  printf 'Install? [y/N]: '
+#  if read -q; then
+#    echo; zplug install
+#  fi
+#fi
 
 zplug load --verbose
-source ~/.zprofile
 
 # Completion
 zstyle ':completion:*' completer _complete _match _approximate
@@ -34,20 +38,6 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*:default' menu select=2
 zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 zstyle ':completion:*:options' description 'yes'
-
-autoload -Uz compinit
-compinit
-
-# Exports
-export CLICOLOR=true
-export LSCOLORS='exfxcxdxbxGxDxabagacad'
-export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'
-export EDITOR=nvim
-export HISTFILE=~/.zhistory
-export HISTSIZE=10000
-export SAVEHIST=1000000
-export LANG=ja_JP.UTF-8
-export PATH=/usr/local/redis-2.6/bin:$PATH
 
 # key bindingsnd
 bindkey "^[OH" beginning-of-line
@@ -208,3 +198,7 @@ function peco-src () {
   zle clear-screen
 }
 zle -N peco-src
+
+#if (which zprof > /dev/null) ;then
+#  zprof | less
+#fi

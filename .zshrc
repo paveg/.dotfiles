@@ -2,31 +2,34 @@ if [ $DOTFILES/.zshrc -nt $HOME/.zshrc.zwc ] ; then
   zcompile $HOME/.zshrc
 fi
 
-source ~/.zplug/init.zsh
+source $ZPLUG_HOME/init.zsh
 
-# define plugin
-zplug 'zsh-users/zsh-autosuggestions'
-zplug 'zsh-users/zsh-completions'
-zplug 'zsh-users/zsh-syntax-highlighting', nice:10
-zplug 'zsh-users/zsh-history-substring-search'
-zplug 'nojhan/liquidprompt'
-zplug 'b4b4r07/enhancd', use:enhancd.sh
-zplug 'mollifier/anyframe'
-zplug 'mollifier/cd-gitroot'
-zplug 'peco/peco', as:command, from:gh-r, use:"*amd64*"
-zplug 'b4b4r07/dotfiles', as:command, of:bin/peco-tmux
-zplug 'chrissicool/zsh-256color', use:'zsh-256color.plugin.zsh'
-# zplug 'yonchu/zsh-vcs-prompt'
-# install
+if [ -e $ZPLUG_HOME ] ; then
 
-#if ! zplug check --verbose; then
-#  printf 'Install? [y/N]: '
-#  if read -q; then
-#    echo; zplug install
-#  fi
-#fi
+  # define plugin
+  zplug 'zsh-users/zsh-autosuggestions'
+  zplug 'zsh-users/zsh-completions'
+  zplug 'zsh-users/zsh-syntax-highlighting', defer:2
+  zplug 'zsh-users/zsh-history-substring-search'
+  zplug 'b4b4r07/enhancd', use:enhancd.sh
+  zplug 'mollifier/anyframe'
+  zplug 'mollifier/cd-gitroot'
+  zplug 'peco/peco', as:command, from:gh-r, use:"*amd64*"
+  zplug 'b4b4r07/dotfiles', as:command, use:bin/peco-tmux
+  zplug 'chrissicool/zsh-256color', use:"zsh-256color.plugin.zsh"
+  zplug 'nojhan/liquidprompt'
+  zplug "b4b4r07/emoji-cli", on:"stedolan/jq"
+  #zplug 'yonchu/zsh-vcs-prompt'
 
-zplug load --verbose
+  # install
+  #if ! zplug check --verbose; then
+  #  printf 'Install? [y/N]: '
+  #  if read -q; then
+  #    echo; zplug install
+  #  fi
+  #fi
+  zplug load --verbose
+fi
 
 # Completion
 zstyle ':completion:*' completer _complete _match _approximate
@@ -64,7 +67,6 @@ setopt magic_equal_subst
 setopt notify
 setopt print_eight_bit
 setopt print_exit_value
-setopt prompt_subst
 setopt pushd_ignore_dups
 setopt rm_star_wait
 setopt share_history
@@ -198,6 +200,25 @@ function peco-src () {
   zle clear-screen
 }
 zle -N peco-src
+
+function peco-find-file() {
+  if git rev-parse 2> /dev/null; then
+    source_files=$(git ls-files)
+  else
+    source_files=$(find . -type f)
+  fi
+  selected_files=$(echo $source_files | peco --prompt "[find file]")
+
+  result=''
+  for file in $selected_files; do
+    result="${result}$(echo $file | tr '\n' ' ')"
+  done
+
+  BUFFER="${BUFFER}${result}"
+  CURSOR=$#BUFFER
+  zle redisplay
+}
+zle -N peco-find-file
 
 #if (which zprof > /dev/null) ;then
 #  zprof | less

@@ -5,6 +5,9 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 set clipboard+=unnamedplus
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+inoremap [<Enter> []<Left><CR><ESC><S-o>
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
 autocmd VimEnter * execute 'NERDTree'
 
 let g:cache_home = empty($XDG_CACHE_HOME) ? expand('$HOME/.cache') : $XDG_CACHE_HOME

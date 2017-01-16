@@ -19,3 +19,10 @@ repo = 'altercation/vim-colors-solarized'
 
 [[plugins]] # NERDTree
 repo = 'scrooloose/nerdtree'
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+

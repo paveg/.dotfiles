@@ -1,4 +1,5 @@
 setopt no_global_rcs
+typeset -U path PATH cdpath fpath manpath
 #zmodload zsh/zprof && zprof
 if [ -z $ZSH_ENV_LOADED ] ; then
   export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/redis-2.6/bin
@@ -29,7 +30,6 @@ if [ -z $ZSH_ENV_LOADED ] ; then
   export SAVEHIST=1000000
   export LANG=ja_JP.UTF-8
   export ZSH_ENV_LOADED="1"
-  typeset -U path PATH
 else
   print "skipped to read .zshenv \n"
 fi

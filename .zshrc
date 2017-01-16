@@ -17,8 +17,10 @@ if [ -e $ZPLUG_HOME ] ; then
   zplug 'peco/peco', as:command, from:gh-r, use:"*amd64*"
   zplug 'b4b4r07/dotfiles', as:command, use:bin/peco-tmux
   zplug 'chrissicool/zsh-256color', use:"zsh-256color.plugin.zsh"
-  zplug 'nojhan/liquidprompt'
   zplug "b4b4r07/emoji-cli", on:"stedolan/jq"
+  zplug 'mafredri/zsh-async', from:'github'
+  zplug 'sindresorhus/pure', use:'pure.zsh', from:'github', as:'theme'
+  #zplug 'nojhan/liquidprompt'
   #zplug 'yonchu/zsh-vcs-prompt'
 
   # install
@@ -30,6 +32,9 @@ if [ -e $ZPLUG_HOME ] ; then
   #fi
   zplug load --verbose
 fi
+
+autoload -U promptinit; promptinit
+prompt pure
 
 # Completion
 zstyle ':completion:*' completer _complete _match _approximate
@@ -43,6 +48,8 @@ zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 zstyle ':completion:*:options' description 'yes'
 
 # key bindingsnd
+bindkey -d
+bindkey -e
 bindkey "^[OH" beginning-of-line
 bindkey "^[OF" end-of-line
 bindkey "^[[3~" delete-char
@@ -220,6 +227,6 @@ function peco-find-file() {
 }
 zle -N peco-find-file
 
-#if (which zprof > /dev/null) ;then
-#  zprof | less
-#fi
+if (which zprof > /dev/null) ;then
+  zprof | less
+fi

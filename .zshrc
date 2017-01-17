@@ -1,3 +1,14 @@
+# export DOTFILES="$HOME/.dotfiles"
+# export ZDOTDIR="$DOTFILES/.zsh.d"
+
+# loadfiles
+# loadlib $ZDOTDIR/00_env.zsh
+# loadlib $ZDOTDIR/01_dev.zsh
+# loadlib $ZDOTDIR/02_nop.zsh
+# loadlib $ZDOTDIR/alias.zsh
+# loadlib $ZDOTDIR/func.zsh
+# loadlib $ZDOTDIR/os.zsh
+
 if [ $DOTFILES/.zshrc -nt $HOME/.zshrc.zwc ] ; then
   zcompile $HOME/.zshrc
 fi
@@ -121,15 +132,16 @@ alias -g B='`git branch -a | peco --prompt "GIT BRANCH>" | head -n 1 | sed -e "s
 alias -g R='`git remote | peco --prompt "GIT REMOTE>" | head -n 1`'
 alias ctags="`brew --prefix`/bin/ctags"
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  alias ls='ls --color=auto'
-  alias dir='dir --color=auto'
-  alias vdir='vdir --color=auto'
-  alias grep='grep --color=auto'
-  alias fgrep='fgrep --color=auto'
-  alias egrep='egrep --color=auto'
-fi
+
+#if [ -x /usr/bin/dircolors ]; then
+#  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+#  alias ls='ls --color=auto'
+#  alias dir='dir --color=auto'
+#  alias vdir='vdir --color=auto'
+#  alias grep='grep --color=auto'
+#  alias fgrep='fgrep --color=auto'
+#  alias egrep='egrep --color=auto'
+#fi
 
 ## others
 
@@ -226,6 +238,10 @@ function peco-find-file() {
   zle redisplay
 }
 zle -N peco-find-file
+
+function ghq-update() {
+  ghq list | sed -E 's/^[^\/]+\/(.+)/\1/' | xargs -n 1 -P 10 ghq get -u
+}
 
 if (which zprof > /dev/null) ;then
   zprof | less

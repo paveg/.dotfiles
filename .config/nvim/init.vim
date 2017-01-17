@@ -60,7 +60,12 @@ set noswapfile
 set tabstop=2
 set shiftwidth=2
 set expandtab
-set clipboard+=unnamedplus
+set clipboard&
+set clipboard^=unnamedplus
+set mouse-=a
+set list
+set listchars=tab:>-,trail:-
+
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
 inoremap (<Enter> ()<Left><CR><ESC><S-o>

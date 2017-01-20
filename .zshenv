@@ -16,6 +16,8 @@ if [ -z $ZSH_ENV_LOADED ] ; then
   export XDG_CACHE_HOME="$HOME/.cache"
   export ENHANCD_COMMAND=ed
   export ENHANCD_FILTER=ENHANCD_FILTER=fzy:fzf:peco
+  export FILTER="peco:fzf"
+  available $FILTER
   # anyenv
   if [ -d $HOME/.anyenv ] ; then
     export PATH="$HOME/.anyenv/bin:$PATH"

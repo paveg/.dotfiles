@@ -13,61 +13,59 @@ if [ $DOTFILES/.zshrc -nt $HOME/.zshrc.zwc ] ; then
   zcompile $HOME/.zshrc
 fi
 
-function is_exists() { type "$1" >/dev/null 2>&1; return $?; }
-function is_osx() { [[ $OSTYPE == darwin* ]]; }
-function is_screen_running() { [ ! -z "$STY" ]; }
-function is_tmux_runnning() { [ ! -z "$TMUX" ]; }
-function is_screen_or_tmux_running() { is_screen_running || is_tmux_runnning; }
-function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
-function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
+is_exists() { type "$1" >/dev/null 2>&1; return $?; }
+is_osx() { [[ $OSTYPE == darwin* ]]; }
+is_screen_running() { [ ! -z "$STY" ]; }
+is_tmux_runnning() { [ ! -z "$TMUX" ]; }
+is_screen_or_tmux_running() { is_screen_running || is_tmux_runnning; }
+shell_has_started_interactively() { [ ! -z "$PS1" ]; }
+is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
 
-function tmux_automatically_attach_session()
-{
-    if is_screen_or_tmux_running; then
-        ! is_exists 'tmux' && return 1
-
-        if is_tmux_runnning; then
-            echo "tmux starting...."
-        elif is_screen_running; then
-            echo "This is on screen."
-        fi
-    else
-        if shell_has_started_interactively && ! is_ssh_running; then
-            if ! is_exists 'tmux'; then
-                echo 'Error: tmux command not found' 2>&1
-                return 1
-            fi
-
-            if tmux has-session >/dev/null 2>&1 && tmux list-sessions | grep -qE '.*]$'; then
-                # detached session exists
-                tmux list-sessions
-                echo -n "Tmux: attach? (y/N/num) "
-                read
-                if [[ "$REPLY" =~ ^[Yy]$ ]] || [[ "$REPLY" == '' ]]; then
-                    tmux attach-session
-                    if [ $? -eq 0 ]; then
-                        echo "$(tmux -V) attached session"
-                        return 0
-                    fi
-                elif [[ "$REPLY" =~ ^[0-9]+$ ]]; then
-                    tmux attach -t "$REPLY"
-                    if [ $? -eq 0 ]; then
-                        echo "$(tmux -V) attached session"
-                        return 0
-                    fi
-                fi
-            fi
-
-            if is_osx && is_exists 'reattach-to-user-namespace'; then
-                # on OS X force tmux's default command
-                # to spawn a shell in the user's namespace
-                tmux_config=$(cat $HOME/.tmux.conf <(echo 'set-option -g default-command "reattach-to-user-namespace -l $SHELL"'))
-                tmux -f <(echo "$tmux_config") new-session && echo "$(tmux -V) created new session supported OS X"
-            else
-                tmux new-session && echo "tmux created new session"
-            fi
-        fi
+tmux_automatically_attach_session() {
+  if is_screen_or_tmux_running; then
+    ! is_exists 'tmux' && return 1
+    if is_tmux_runnning; then
+      echo "tmux starting...."
+    elif is_screen_running; then
+      echo "This is on screen."
     fi
+  else
+    if shell_has_started_interactively && ! is_ssh_running; then
+      if ! is_exists 'tmux'; then
+        echo 'Error: tmux command not found' 2>&1
+        return 1
+      fi
+
+      if tmux has-session >/dev/null 2>&1 && tmux list-sessions | grep -qE '.*]$'; then
+        # detached session exists
+        tmux list-sessions
+        echo -n "Tmux: attach? (y/N/num) "
+        read
+        if [[ "$REPLY" =~ ^[Yy]$ ]] || [[ "$REPLY" == '' ]]; then
+          tmux attach-session
+          if [ $? -eq 0 ]; then
+            echo "$(tmux -V) attached session"
+            return 0
+          fi
+        elif [[ "$REPLY" =~ ^[0-9]+$ ]]; then
+          tmux attach -t "$REPLY"
+          if [ $? -eq 0 ]; then
+            echo "$(tmux -V) attached session"
+            return 0
+          fi
+        fi
+      fi
+
+      if is_osx && is_exists 'reattach-to-user-namespace'; then
+        # on OS X force tmux's default command
+        # to spawn a shell in the user's namespace
+        tmux_config=$(cat $HOME/.tmux.conf <(echo 'set-option -g default-command "reattach-to-user-namespace -l $SHELL"'))
+        tmux -f <(echo "$tmux_config") new-session && echo "$(tmux -V) created new session supported OS X"
+      else
+        tmux new-session && echo "tmux created new session"
+      fi
+    fi
+  fi
 }
 tmux_automatically_attach_session
 
@@ -223,22 +221,22 @@ case ${OSTYPE} in
 esac
 
 # peco settings
-function peco-select-history() {
-    local tac
-    if which tac > /dev/null; then
-        tac="tac"
-    else
-        tac="tail -r"
-    fi
-    BUFFER=$(\history -n 1 | \
-        eval $tac | \
-        peco --query "$LBUFFER")
+peco-select-history() {
+  local tac
+  if which tac > /dev/null; then
+    tac="tac"
+  else
+    tac="tail -r"
+  fi
+  BUFFER=$(\history -n 1 | \
+    eval $tac | \
+    peco --query "$LBUFFER")
     CURSOR=$#BUFFER
     zle clear-screen
 }
 zle -N peco-select-history
 
-function peco-cdr () {
+peco-cdr () {
   local selected_dir=$(cdr -l | awk '{ print $2 }' | peco --prompt "[cd]")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
@@ -248,26 +246,26 @@ function peco-cdr () {
 }
 zle -N peco-cdr
 
-function do_enter() {
-    if [ -n "$BUFFER" ]; then
-        zle accept-line
-        return 0
-    fi
-    echo
-    ls -cfG
-    # ↓おすすめ
-    # ls_abbrev
-    if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
-        echo
-        echo -e "\e[0;33m--- git status ---\e[0m"
-        git status -sb
-    fi
-    zle reset-prompt
+do_enter() {
+  if [ -n "$BUFFER" ]; then
+    zle accept-line
     return 0
+  fi
+  echo
+  ls -cfG
+  # ↓おすすめ
+  # ls_abbrev
+  if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
+    echo
+    echo -e "\e[0;33m--- git status ---\e[0m"
+    git status -sb
+  fi
+  zle reset-prompt
+  return 0
 }
 zle -N do_enter
 
-function peco-src () {
+peco-src () {
   local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
@@ -277,7 +275,7 @@ function peco-src () {
 }
 zle -N peco-src
 
-function peco-find-file() {
+peco-find-file() {
   if git rev-parse 2> /dev/null; then
     source_files=$(git ls-files)
   else
@@ -296,10 +294,59 @@ function peco-find-file() {
 }
 zle -N peco-find-file
 
-function ghq-update() {
+ghq-update() {
   ghq list | sed -E 's/^[^\/]+\/(.+)/\1/' | xargs -n 1 -P 10 ghq get -u
 }
 
+branch-clean() {
+  if [[ -n $1 ]] ; then
+    git branch G $1 | xargs -I% zsh -c 'echo start to delete branch %; git branch -d %;'
+  else
+    echo "invalid arguments...\n"
+  fi
+}
+
+available () {
+  local x candidates
+  candidates="$1:"
+  while [ -n "$candidates" ]
+  do
+    x=${candidates%%:*}
+    candidates=${candidates#*:}
+    if type "$x" >/dev/null 2>&1; then
+      echo "$x"
+      return 0
+    else
+      continue
+    fi
+  done
+  return 1
+}
+
+branch-select-delete() {
+  git branch | fzf | xargs git branch -d
+}
+
+fshow() {
+  local out shas sha q k
+  while out=$(
+    git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+    fzf --ansi --multi --no-sort --reverse --query="$q" \
+      --print-query --expect=ctrl-d); do
+    q=$(head -1 <<< "$out")
+    k=$(head -2 <<< "$out" | tail -1)
+    shas=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
+    [ -z "$shas" ] && continue
+    if [ "$k" = ctrl-d ]; then
+      git diff --color=always $shas | less -R
+    else
+      for sha in $shas; do
+        git show --color=always $sha | less -R
+      done
+    fi
+  done
+}
 
 if (which zprof > /dev/null) ;then
   zprof | less

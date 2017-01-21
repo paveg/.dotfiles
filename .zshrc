@@ -1,22 +1,22 @@
-export DOTFILES=$HOME/.dotfiles
-export ZDOTDIR=$DOTFILES/.zsh.d
+umask 022
+limit coredumpsize 0
+bindkey -d
 
 . $DOTFILES/etc/libs.zsh
-
+echo "read .zshrc L6"
 # loadfiles
-loadlib $ZDOTDIR/00_utils.zsh
-# loadlib $ZDOTDIR/01_dev.zsh
-loadlib $ZDOTDIR/02_setopt.zsh
-loadlib $ZDOTDIR/03_alias.zsh
-loadlib $ZDOTDIR/04_func.zsh
-loadlib $ZDOTDIR/05_os.zsh
-loadlib $ZDOTDIR/06_misc.zsh
-loadlib $ZDOTDIR/07_tmux.zsh
-loadlib $ZDOTDIR/08_keybind.zsh
+loadlib $ZDOTDIR/utils.zsh
+loadlib $ZDOTDIR/dev.zsh
+loadlib $ZDOTDIR/normal_opt.zsh
+loadlib $ZDOTDIR/alias.zsh
+loadlib $ZDOTDIR/func.zsh
+loadlib $ZDOTDIR/os.zsh
+loadlib $ZDOTDIR/tmux.zsh
 
-autoload -U promptinit; promptinit
-prompt pure
-
+if [ -n "${DOCKER_CONTAINER}" ]; then
+  PROMPT="(${DOCKER_CONTAINER})%# "
+fi
+echo "read .zshrc"
 if [[ -f $ZPLUG_HOME/init.zsh ]]; then
   export ZPLUG_LOADFILE=$ZDOTDIR/zplug.zsh
   # For development version of zplug

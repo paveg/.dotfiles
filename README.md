@@ -1,11 +1,10 @@
-# dotfiles
+# .dotfiles
 
 ### directory constitution
 
 ```zsh
-
 ~/.dotfiles master*
-❯ tree -a -L 2
+% tree -a -L 2
 .
 ├── .config
 │   ├── dein
@@ -26,7 +25,6 @@
 │   ├── utils.zsh
 │   └── zplug.zsh
 ├── .zshenv
-├── .zshrc
 ├── Brewfile
 ├── Makefile
 ├── README.md
@@ -36,5 +34,5 @@
 │   └── libs.zsh
 └── setup.sh
 
-14 directories, 35 files
+13 directories, 33 files
 ```

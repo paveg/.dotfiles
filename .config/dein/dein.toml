@@ -20,6 +20,9 @@ repo = 'altercation/vim-colors-solarized'
 [[plugins]] # NERDTree
 repo = 'scrooloose/nerdtree'
 
+[[plugins]] # vim-git
+repo = 'tpope/vim-fugitive'
+
 [[plugins]]
 repo = 'Yggdroot/indentLine'
 

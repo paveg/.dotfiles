@@ -1,8 +1,10 @@
 # dotfiles
 
 ### directory constitution
+
+```zsh
 ~/.dotfiles master*
-❯ tree -a -L 2
+% tree -a -L 2
 .
 ├── .config
 │   ├── dein
@@ -32,4 +34,4 @@
 └── setup.sh
 
 12 directories, 36 files
-
+```

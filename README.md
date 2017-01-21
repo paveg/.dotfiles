@@ -3,25 +3,27 @@
 ### directory constitution
 
 ```zsh
+
 ~/.dotfiles master*
-% tree -a -L 2
+❯ tree -a -L 2
 .
 ├── .config
 │   ├── dein
+│   ├── htop
 │   └── nvim
 ├── .git
 ├── .gitignore
 ├── .ruby-version
 ├── .tmux.conf
 ├── .zsh.d
-│   ├── 00_utils.zsh
-│   ├── 02_setopt.zsh
-│   ├── 03_alias.zsh
-│   ├── 04_func.zsh
-│   ├── 05_os.zsh
-│   ├── 06_misc.zsh
-│   ├── 07_tmux.zsh
-│   ├── 08_keybind.zsh
+│   ├── .zshrc
+│   ├── alias.zsh
+│   ├── dev.zsh
+│   ├── func.zsh
+│   ├── normal_opt.zsh
+│   ├── os.zsh
+│   ├── tmux.zsh
+│   ├── utils.zsh
 │   └── zplug.zsh
 ├── .zshenv
 ├── .zshrc
@@ -29,9 +31,10 @@
 ├── Makefile
 ├── README.md
 ├── etc
+│   ├── init
 │   ├── libs.sh
 │   └── libs.zsh
 └── setup.sh
 
-12 directories, 36 files
+14 directories, 35 files
 ```

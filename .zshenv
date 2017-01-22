@@ -13,7 +13,7 @@ path=( \
 autoload -Uz run-help
 autoload -Uz add-zsh-hook
 autoload -Uz colors && colors
-autoload -Uz compinit && compinit -u
+# autoload -Uz compinit && compinit -u -> comment out for speed-up
 autoload -Uz is-at-least
 autoload -Uz promptinit
 promptinit

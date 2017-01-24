@@ -17,7 +17,7 @@ autoload -Uz colors && colors
 autoload -Uz is-at-least
 autoload -Uz promptinit
 promptinit
-prompt pure
+#prompt pure
 
 # set dotfiles, zdotdir, zplug_home
 export DOTFILES=$HOME/.dotfiles
@@ -44,7 +44,7 @@ export ENHANCD_FILTER=ENHANCD_FILTER=fzy:fzf:peco
 
 export ANYENV_ROOT=$HOME/.anyenv
 export GOPATH=$HOME
-
+export CONFIGURE_OPTS="--with-readline-dir=`brew --prefix readline` --with-openssl-dir=`brew --prefix openssl` --with-iconv-dir=`brew --prefix libiconv` --disable-install-rdoc"
 export CLICOLOR=true
 export LSCOLORS='exfxcxdxbxGxDxabagacad'
 export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'
@@ -54,3 +54,6 @@ export HISTSIZE=1000000
 export SAVEHIST=1000000
 
 export FZF_DEFAULT_OPTS="--extended --ansi --multi"
+export HOMEBREW_BREWFILE=$HOME/Brewfile
+
+[[ -f $HOME/.secret ]] && source $HOME/.secret

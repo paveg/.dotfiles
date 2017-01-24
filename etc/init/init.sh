@@ -3,15 +3,15 @@
 trap 'echo Error: $0:$LINENO stopped; exit 1' ERR INT
 set -eu
 
-if [ -z "$DOTPATH" ]; then
+if [ -z "$DOTFILES" ]; then
     # shellcheck disable=SC2016
-    echo '$DOTPATH not set' >&2
+    echo '$DOTFILES not set' >&2
     exit 1
 fi
 
-. "$DOTPATH"/etc/libs.sh
+. "$DOTFILES"/etc/libs.sh
 
-for i in "$DOTPATH"/etc/init/"$(get_os)"/*.sh
+for i in "$DOTFILES"/etc/init/"$(get_os)"/*.sh
 do
   if [ -f $i ]; then   
     log_info "$(basename $i)"
@@ -21,4 +21,4 @@ do
   fi
 done
 
-log_pass "$0: Finish!!" | sed "s $DOTPATH \$DOTPATH g"
+log_pass "$0: Finish!!" | sed "s $DOTFILES \$DOTFILES g"

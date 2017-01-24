@@ -101,6 +101,7 @@ alias mdfo='mdfind -onlyin'
 
 # my aliases
 alias be="bundle exec"
+alias git='hub'
 alias g='git'
 
 # suffix alias
@@ -115,4 +116,3 @@ alias -s go='go run'
 alias zshtime10='for i in $(seq 1 10); do time zsh -i -c exit; done'
 alias zshtime='time zsh -i -c'
 
-alias brew="env PATH=${PATH/\/Users\/$USERNAME\/.anyenv\/envs\/*env\/shims:/} brew"

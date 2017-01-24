@@ -35,6 +35,10 @@ fi
 
 eval "$(direnv hook zsh)"
 
+#if [ -f $(brew --prefix)/etc/brew-wrap ];then
+#  source $(brew --prefix)/etc/brew-wrap
+#fi
+
 if (which zprof > /dev/null) ;then
   zprof | less
 fi

@@ -17,6 +17,8 @@ function anyenv_unset() {
   unset -f ndenv
   unset -f rbenv
   unset -f pyenv
+  unset -f plenv
+  unset -f goenv
 }
 function ndenv() {
   anyenv_unset
@@ -43,3 +45,4 @@ function goenv() {
   anyenv_init
   goenv "$@"
 }
+

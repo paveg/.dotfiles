@@ -10,6 +10,7 @@ zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 zstyle ':completion:*:options' description 'yes'
 
 ## options
+setopt nonomatch
 setopt ignore_eof
 setopt prompt_subst
 setopt auto_cd

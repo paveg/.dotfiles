@@ -1,5 +1,5 @@
+typeset -gx -U path
 setopt no_global_rcs
-typeset -U path PATH cdpath fpath manpath
 
 path=( \
     /usr/local/bin(N-/) \
@@ -8,7 +8,8 @@ path=( \
     ~/.tmux/bin(N-/) \
     "$path[@]" \
     )
-#zmodload zsh/zprof && zprof
+
+# zmodload zsh/zprof && zprof
 
 autoload -Uz run-help
 autoload -Uz add-zsh-hook
@@ -17,12 +18,17 @@ autoload -Uz colors && colors
 autoload -Uz is-at-least
 autoload -Uz promptinit
 promptinit
-#prompt pure
+# prompt pure
+
 
 # set dotfiles, zdotdir, zplug_home
 export DOTFILES=$HOME/.dotfiles
 export ZDOTDIR=$DOTFILES/.zsh.d
 export ZPLUG_HOME=$HOME/.zplug
+
+# openssl
+export LD_LIBRARY_PATH=/usr/local/opt/openssl/lib:$LD_LIBRARY_PATH
+export CPATH=/usr/local/opt/openssl/include:$LD_LIBRARY_PATH
 
 # language
 export LANGUAGE=ja_JP.UTF-8
@@ -37,7 +43,7 @@ export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
 
 export VIM=/usr/local/Cellar/neovim/0.1.7/share/nvim
-export XDG_CONFIG_HOME=$DOTFILES/.config
+export XDG_CONFIG_HOME=$DOTFILES/config
 export XDG_CACHE_HOME=$HOME/.cache
 export ENHANCD_COMMAND=ed
 export ENHANCD_FILTER=ENHANCD_FILTER=fzy:fzf:peco
@@ -56,4 +62,3 @@ export SAVEHIST=1000000
 export FZF_DEFAULT_OPTS="--extended --ansi --multi"
 export HOMEBREW_BREWFILE=$HOME/Brewfile
 
-[[ -f $HOME/.secret ]] && source $HOME/.secret

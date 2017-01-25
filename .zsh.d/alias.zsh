@@ -114,5 +114,5 @@ alias -s go='go run'
 
 # zshtime
 alias zshtime10='for i in $(seq 1 10); do time zsh -i -c exit; done'
-alias zshtime='time zsh -i -c'
+alias zshtime='time zsh -i -c exit;'
 

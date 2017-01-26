@@ -1,4 +1,4 @@
-typeset -gx -U path
+typeset -gx -U path PATH
 setopt no_global_rcs
 
 path=( \

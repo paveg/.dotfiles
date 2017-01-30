@@ -139,3 +139,21 @@ fshow() {
     fi
   done
 }
+
+# open pull request
+function openpr-by-file() {
+  declare file
+  [ $# -ne 0 ] && { file=${1}; } || { echo "need to assign target file"; return; }
+  declare target=${2:-"develop"}
+
+  PRS=$(git prlist ${file} ${target} | awk 'BEGIN {OFS="\t"} {print NR,$8,$1,$2,$10}' | sed -e 's%#%pull/%g' | peco)
+  eval "hub browse -- $(echo ${PRS} | cut -f 2)"
+}
+
+lssh () {
+  IP=$(lsec2 $@ | peco | awk -F "\t" '{print $2}')
+  if [ $? -eq 0 -a "${IP}" != "" ]
+  then
+      ssh ${IP}
+  fi
+}

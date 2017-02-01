@@ -157,3 +157,30 @@ on_ft = 'python'
 [[plugins]]
 repo = 'andviro/flake8-vim'
 on_ft = 'python'
+
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+on_ft = ['javascript', 'javascript.jsx']
+
+[[plugins]]
+repo = 'maxmellon/vim-jsx-pretty'
+on_ft = ['javascript', 'javascript.jsx']
+
+[[plugins]]
+repo = 'othree/javascript-libraries-syntax.vim'
+on_ft = ['javascript', 'javascript.jsx']
+
+[[plugins]]
+repo = 'othree/es.next.syntax.vim'
+on_ft = ['javascript', 'javascript.jsx']
+
+[[plugins]]
+repo = 'Chiel92/vim-autoformat'
+hook_add = '''
+  let g:autoformat_autoindent = 0
+  let g:autoformat_retab = 0
+  let g:autoformat_remove_trailing_spaces = 0
+  au MyAutoCmd BufWrite *.js,*.jsx :Autoformat
+  nnoremap [Space]f :<C-u>Autoformat<CR>
+'''
+

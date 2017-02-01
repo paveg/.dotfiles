@@ -61,4 +61,5 @@ export SAVEHIST=1000000
 
 export FZF_DEFAULT_OPTS="--extended --ansi --multi"
 export HOMEBREW_BREWFILE=$HOME/Brewfile
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 

@@ -41,6 +41,7 @@ alias lc='ls -ltcr'        # Sort by and show change time, most recent last
 alias lu='ls -ltur'        # Sort by and show access time, most recent last
 alias lt='ls -ltr'         # Sort by date, most recent last
 alias lr='ls -lR'          # Recursive ls
+alias hi='history'
 
 # The ubiquitous 'll': directories first, with alphanumeric sorting:
 #alias ll='ls -lv --group-directories-first'
@@ -66,17 +67,15 @@ else
     alias diff='diff -u'
 fi
 
+# Use plain vim.
 alias vi="vim"
 
-# Use plain vim.
 alias v='nvim'
-alias vi='nvim'
 alias vim='nvim'
 
-# The first word of each simple command, if unquoted, is checked to see 
-# if it has an alias. [...] If the last character of the alias value is 
-# a space or tab character, then the next command word following the 
-# alias is also checked for alias expansion
+# The first word of each simple command, if unquoted, is checked to see if it has an alias.
+# [...] If the last character of the alias value is a space or tab character,
+# then the next command word following the alias is also checked for alias expansion.
 alias sudo='sudo '
 if is_osx; then
     alias sudo="${ZSH_VERSION:+nocorrect} sudo "

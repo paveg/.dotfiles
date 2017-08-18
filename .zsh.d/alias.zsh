@@ -107,11 +107,13 @@ alias g='git'
 alias -s hs=runhaskell
 alias -s py=python
 alias -s rb=ruby
-alias -s c=runc
+# alias -s c=runc
 alias -s cpp=runcpp
-alias -s go='go run'
+# alias -s go='go run'
 
 # zshtime
 alias zshtime10='for i in $(seq 1 10); do time zsh -i -c exit; done'
 alias zshtime='time zsh -i -c exit;'
 
+# chrome
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"

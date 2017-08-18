@@ -50,6 +50,7 @@ export ENHANCD_FILTER=ENHANCD_FILTER=fzy:fzf:peco
 
 export ANYENV_ROOT=$HOME/.anyenv
 export GOPATH=$HOME
+export GOROOT=$ANYENV_ROOT/envs/goenv/versions/1.8.3
 export CONFIGURE_OPTS="--with-readline-dir=`brew --prefix readline` --with-openssl-dir=`brew --prefix openssl` --with-iconv-dir=`brew --prefix libiconv` --disable-install-rdoc"
 export CLICOLOR=true
 export LSCOLORS='exfxcxdxbxGxDxabagacad'
@@ -63,3 +64,6 @@ export FZF_DEFAULT_OPTS="--extended --ansi --multi"
 export HOMEBREW_BREWFILE=$HOME/Brewfile
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
+# less
+export LESS="-R"
+export LESSOPEN="| lessfilter %s"

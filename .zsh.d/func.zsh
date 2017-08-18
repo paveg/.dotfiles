@@ -5,6 +5,7 @@ bindkey "^[OH" beginning-of-line
 bindkey "^[OF" end-of-line
 bindkey "^[[3~" delete-char
 bindkey "^g" peco-find-file
+bindkey "^f" fzf-find-file
 bindkey "^r" peco-select-history
 bindkey "^@" peco-cdr
 bindkey '^m' do_enter
@@ -66,6 +67,25 @@ peco-find-file() {
 }
 zle -N peco-find-file
 
+fzf-find-file() {
+  if git rev-parse 2> /dev/null; then
+    source_files=$(git ls-files)
+  else
+    source_files=$(find . -type f)
+  fi
+  selected_files=$(echo $source_files | fzf --prompt "[find file]")
+
+  result=''
+  for file in $selected_files; do
+    result="${result}$(echo $file | tr '\n' ' ')"
+  done
+
+  BUFFER="${BUFFER}${result}"
+  CURSOR=$#BUFFER
+  zle redisplay
+}
+zle -N fzf-find-file
+
 # other
 do_enter() {
   if [ -n "$BUFFER" ]; then
@@ -73,7 +93,7 @@ do_enter() {
     return 0
   fi
   echo
-  ls -cfG
+  ls -acGU
   # ↓おすすめ
   # ls_abbrev
   if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then

@@ -19,6 +19,8 @@ function anyenv_unset() {
   unset -f pyenv
   unset -f plenv
   unset -f goenv
+  unset -f sbtenv
+  unset -f scalaenv
 }
 function ndenv() {
   anyenv_unset
@@ -45,4 +47,13 @@ function goenv() {
   anyenv_init
   goenv "$@"
 }
-
+function sbtenv() {
+  anyenv_unset
+  anyenv_init
+  sbtenv "$@"
+}
+function scalaenv() {
+  anyenv_unset
+  anyenv_init
+  scalaenv "$@"
+}

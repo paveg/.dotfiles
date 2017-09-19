@@ -76,10 +76,10 @@ alias vim='nvim'
 # The first word of each simple command, if unquoted, is checked to see if it has an alias.
 # [...] If the last character of the alias value is a space or tab character,
 # then the next command word following the alias is also checked for alias expansion.
-alias sudo='sudo '
-if is_osx; then
-    alias sudo="${ZSH_VERSION:+nocorrect} sudo "
-fi
+#alias sudo='sudo '
+#if is_osx; then
+#    alias sudo="${ZSH_VERSION:+nocorrect} sudo "
+#fi
 
 # Global aliases
 alias -g G=  '| grep'

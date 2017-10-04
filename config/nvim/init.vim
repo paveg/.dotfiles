@@ -3,6 +3,7 @@ if !&compatible
 endif
 let g:cache_home = empty($XDG_CACHE_HOME) ? expand('$HOME/.cache') : $XDG_CACHE_HOME
 let g:config_home = empty($XDG_CONFIG_HOME) ? expand('$DOTFILES/.config') : $XDG_CONFIG_HOME
+let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
 
 " dein {{{
 let s:dein_cache_dir = g:cache_home . '/dein'

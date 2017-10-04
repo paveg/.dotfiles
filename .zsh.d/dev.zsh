@@ -15,6 +15,7 @@ function anyenv_init() {
 }
 function anyenv_unset() {
   unset -f ndenv
+  unset -f nodenv
   unset -f rbenv
   unset -f pyenv
   unset -f plenv
@@ -26,6 +27,11 @@ function ndenv() {
   anyenv_unset
   anyenv_init
   ndenv "$@"
+}
+function nodenv() {
+  anyenv_unset
+  anyenv_init
+  nodenv "$@"
 }
 function rbenv() {
   anyenv_unset

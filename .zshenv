@@ -8,7 +8,7 @@ path=( \
     ~/.tmux/bin(N-/) \
     "$path[@]" \
     )
-
+export PATH=~/.local/bin:$PATH
 # zmodload zsh/zprof && zprof
 
 autoload -Uz run-help
@@ -42,7 +42,7 @@ export CVSEDITOR="${EDITOR}"
 export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
 
-export VIM=/usr/local/Cellar/neovim/0.1.7/share/nvim
+export VIM=/usr/local/Cellar/neovim/0.2.0_1/share/nvim
 export XDG_CONFIG_HOME=$DOTFILES/config
 export XDG_CACHE_HOME=$HOME/.cache
 export ENHANCD_COMMAND=ed

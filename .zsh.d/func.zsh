@@ -10,6 +10,7 @@ bindkey "^r" peco-select-history
 bindkey "^@" peco-cdr
 bindkey '^m' do_enter
 bindkey '^]' peco-src
+bindkey '^e' peco-branch
 # bindkey '^e' anyframe-widget-cd-ghq-repository
 
 # peco settings
@@ -191,3 +192,17 @@ brew-cask-upgrade() {
     echo "[+] ${app}: ${current} -> ${latest}"; brew cask uninstall "${app}" --force; brew cask install "${app}";
   done;
 }
+
+function peco-branch () {
+    local branch=$(git branch -a | peco | tr -d ' ' | tr -d '*')
+    if [ -n "$branch" ]; then
+      if [ -n "$LBUFFER" ]; then
+        local new_left="${LBUFFER%\ } $branch"
+      else
+        local new_left="$branch"
+      fi
+      BUFFER=${new_left}${RBUFFER}
+      CURSOR=${#new_left}
+    fi
+}
+zle -N peco-branch

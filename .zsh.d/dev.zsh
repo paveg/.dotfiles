@@ -22,6 +22,8 @@ function anyenv_unset() {
   unset -f goenv
   unset -f sbtenv
   unset -f scalaenv
+  unset -f erlenv
+  unset -f exenv
 }
 function ndenv() {
   anyenv_unset
@@ -62,4 +64,14 @@ function scalaenv() {
   anyenv_unset
   anyenv_init
   scalaenv "$@"
+}
+function erlenv() {
+  anyenv_unset
+  anyenv_init
+  erlenv "$@"
+}
+function exenv() {
+  anyenv_unset
+  anyenv_init
+  exenv "$@"
 }

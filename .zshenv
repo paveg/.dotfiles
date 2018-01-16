@@ -50,7 +50,7 @@ export ENHANCD_FILTER=ENHANCD_FILTER=fzy:fzf:peco
 
 export ANYENV_ROOT=$HOME/.anyenv
 export GOPATH=$HOME
-export GOROOT=$ANYENV_ROOT/envs/goenv/versions/1.8.3
+export GOROOT=$ANYENV_ROOT/envs/goenv/versions/1.9.2
 export CONFIGURE_OPTS="--with-readline-dir=`brew --prefix readline` --with-openssl-dir=`brew --prefix openssl` --with-iconv-dir=`brew --prefix libiconv` --disable-install-rdoc"
 export CLICOLOR=true
 export LSCOLORS='exfxcxdxbxGxDxabagacad'

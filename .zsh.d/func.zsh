@@ -7,6 +7,7 @@ bindkey "^[[3~" delete-char
 bindkey "^g" peco-find-file
 bindkey "^f" fzf-find-file
 bindkey "^r" peco-select-history
+bindkey "^w" peco-search-source
 bindkey "^@" peco-cdr
 bindkey '^m' do_enter
 bindkey '^]' peco-src
@@ -28,6 +29,13 @@ peco-select-history() {
     zle clear-screen
 }
 zle -N peco-select-history
+
+peco-search-source(){
+  exec pt "$@" . | \
+    peco --exec 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | \
+    xargs nvim'
+}
+zle -N peco-search-source
 
 peco-cdr () {
   local selected_dir=$(cdr -l | awk '{ print $2 }' | peco --prompt "[cd]")

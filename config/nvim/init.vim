@@ -50,6 +50,7 @@ endif
 " プラグイン以外のその他設定が続く
 " :
 
+" initial settings
 filetype indent on
 filetype plugin indent on
 syntax on
@@ -66,6 +67,10 @@ set clipboard^=unnamedplus
 set mouse-=a
 set list
 set listchars=tab:>-,trail:-
+set ambiwidth=double
+set fileencoding=utf-8
+set showmatch
+source $VIMRUNTIME/macros/matchit.vim
 
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>

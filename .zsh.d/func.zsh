@@ -214,3 +214,23 @@ function peco-branch () {
     fi
 }
 zle -N peco-branch
+
+open-localhost () {
+  local url='http://localhost:'
+  local default_port=3000
+  while getopts p: OPT
+  do
+    case $OPT in
+      p)
+        port=$OPTARG
+        ;;
+    esac
+  done
+
+  shift $((OPTIND-1))
+  if [[ "${port}" != "${default_port}" ]]; then
+    chrome "${url}${port}"
+  else
+    chrome "${url}${default_port}"
+  fi
+}

@@ -111,6 +111,8 @@ alias -s rb=ruby
 alias -s cpp=runcpp
 # alias -s go='go run'
 
+# go
+alias go=richgo
 # zshtime
 alias zshtime10='for i in $(seq 1 10); do time zsh -i -c exit; done'
 alias zshtime='time zsh -i -c exit;'

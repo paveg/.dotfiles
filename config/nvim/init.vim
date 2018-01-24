@@ -58,6 +58,7 @@ scriptencoding utf-8
 syntax enable
 
 set number
+" set termguicolors
 set noswapfile
 set tabstop=2
 set shiftwidth=2
@@ -78,3 +79,16 @@ inoremap (<Enter> ()<Left><CR><ESC><S-o>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-n> :NERDTreeToggle<CR>
+
+if &term =~ "xterm"
+    let &t_SI .= "\e[?2004h"
+    let &t_EI .= "\e[?2004l"
+    let &pastetoggle = "\e[201~"
+
+    function XTermPasteBegin(ret)
+        set paste
+        return a:ret
+    endfunction
+
+    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+endif

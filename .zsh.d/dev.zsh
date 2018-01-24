@@ -14,7 +14,6 @@ function anyenv_init() {
   eval "$(anyenv init -)"
 }
 function anyenv_unset() {
-  unset -f ndenv
   unset -f nodenv
   unset -f rbenv
   unset -f pyenv
@@ -24,11 +23,6 @@ function anyenv_unset() {
   unset -f scalaenv
   unset -f erlenv
   unset -f exenv
-}
-function ndenv() {
-  anyenv_unset
-  anyenv_init
-  ndenv "$@"
 }
 function nodenv() {
   anyenv_unset

@@ -4,17 +4,17 @@ bindkey -e
 bindkey "^[OH" beginning-of-line
 bindkey "^[OF" end-of-line
 bindkey "^[[3~" delete-char
-bindkey "^g" peco-find-file
-bindkey "^f" fzf-find-file
+bindkey "^g" fzf-find-file
 bindkey "^r" peco-select-history
-bindkey "^w" peco-search-source
-bindkey "^@" peco-cdr
+bindkey "^w" fzf-search-source
+bindkey "^@" fzf-cdr
 bindkey '^m' do_enter
-bindkey '^]' peco-src
-bindkey '^e' peco-branch
+bindkey '^]' fzf-src
+bindkey '^e' fzf-branch
+bindkey '^p' fzf-lsec2
 # bindkey '^e' anyframe-widget-cd-ghq-repository
 
-# peco settings
+# fzf settings
 peco-select-history() {
   local tac
   if which tac > /dev/null; then
@@ -30,51 +30,42 @@ peco-select-history() {
 }
 zle -N peco-select-history
 
-peco-search-source(){
+fzf-search-source(){
   exec pt "$@" . | \
-    peco --exec 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | \
+    fzf --ansi --reverse --exec 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | \
     xargs nvim'
 }
-zle -N peco-search-source
+zle -N fzf-search-source
 
-peco-cdr () {
-  local selected_dir=$(cdr -l | awk '{ print $2 }' | peco --prompt "[cd]")
+fzf-lsec2 () {
+  local ip=$(lsec2 -c | fzf --ansi --reverse --query="$LBUFFER" | awk '{print $2}')
+  if [[ "${ip}" != "" ]]; then
+    BUFFER="ssh -t -t ${ip}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N fzf-lsec2
+
+fzf-cdr () {
+  local selected_dir=$(cdr -l | awk '{ print $2 }' | fzf --prompt "[cd]")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
     zle accept-line
   fi
   zle redisplay
 }
-zle -N peco-cdr
+zle -N fzf-cdr
 
-peco-src () {
-  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+fzf-src () {
+  local selected_dir=$(ghq list -p | fzf --ansi --reverse --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
     zle accept-line
   fi
   zle clear-screen
 }
-zle -N peco-src
-
-peco-find-file() {
-  if git rev-parse 2> /dev/null; then
-    source_files=$(git ls-files)
-  else
-    source_files=$(find . -type f)
-  fi
-  selected_files=$(echo $source_files | peco --prompt "[find file]")
-
-  result=''
-  for file in $selected_files; do
-    result="${result}$(echo $file | tr '\n' ' ')"
-  done
-
-  BUFFER="${BUFFER}${result}"
-  CURSOR=$#BUFFER
-  zle redisplay
-}
-zle -N peco-find-file
+zle -N fzf-src
 
 fzf-find-file() {
   if git rev-parse 2> /dev/null; then
@@ -82,7 +73,7 @@ fzf-find-file() {
   else
     source_files=$(find . -type f)
   fi
-  selected_files=$(echo $source_files | fzf --prompt "[find file]")
+  selected_files=$(echo $source_files | fzf --ansi --reverse --prompt "[find file]")
 
   result=''
   for file in $selected_files; do
@@ -175,12 +166,12 @@ function openpr-by-file() {
   [ $# -ne 0 ] && { file=${1}; } || { echo "need to assign target file"; return; }
   declare target=${2:-"develop"}
 
-  PRS=$(git prlist ${file} ${target} | awk 'BEGIN {OFS="\t"} {print NR,$8,$1,$2,$10}' | sed -e 's%#%pull/%g' | peco)
+  PRS=$(git prlist ${file} ${target} | awk 'BEGIN {OFS="\t"} {print NR,$8,$1,$2,$10}' | sed -e 's%#%pull/%g' | fzf --ansi --reverse)
   eval "hub browse -- $(echo ${PRS} | cut -f 2)"
 }
 
 lssh () {
-  IP=$(lsec2 $@ | peco | awk -F "\t" '{print $2}')
+  IP=$(lsec2 $@ | fzf --ansi --reverse | awk -F "\t" '{print $2}')
   if [ $? -eq 0 -a "${IP}" != "" ]
   then
       ssh ${IP}
@@ -201,8 +192,8 @@ brew-cask-upgrade() {
   done;
 }
 
-function peco-branch () {
-    local branch=$(git branch -a | peco | tr -d ' ' | tr -d '*')
+function fzf-branch-all () {
+    local branch=$(git branch -a | fzf --ansi --reverse | tr -d ' ' | tr -d '*')
     if [ -n "$branch" ]; then
       if [ -n "$LBUFFER" ]; then
         local new_left="${LBUFFER%\ } $branch"
@@ -213,7 +204,21 @@ function peco-branch () {
       CURSOR=${#new_left}
     fi
 }
-zle -N peco-branch
+zle -N fzf-branch-all
+
+function fzf-branch () {
+    local branch=$(git branch | fzf --ansi --reverse | tr -d ' ' | tr -d '*')
+    if [ -n "$branch" ]; then
+      if [ -n "$LBUFFER" ]; then
+        local new_left="${LBUFFER%\ } $branch"
+      else
+        local new_left="$branch"
+      fi
+      BUFFER=${new_left}${RBUFFER}
+      CURSOR=${#new_left}
+    fi
+}
+zle -N fzf-branch
 
 open-localhost () {
   local url='http://localhost:'

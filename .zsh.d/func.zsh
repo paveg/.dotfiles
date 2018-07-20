@@ -32,7 +32,7 @@ zle -N peco-select-history
 
 fzf-search-source(){
   exec pt "$@" . | \
-    fzf --ansi --reverse --exec 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | \
+    fzf --ansi --reverse --query="$LBUFFER" | 'awk -F : '"'"'{print "+" $2 " " $1}'"'"' | \
     xargs nvim'
 }
 zle -N fzf-search-source
@@ -239,3 +239,4 @@ open-localhost () {
     chrome "${url}${default_port}"
   fi
 }
+

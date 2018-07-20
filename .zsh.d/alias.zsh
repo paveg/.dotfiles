@@ -117,3 +117,11 @@ alias zshtime='time zsh -i -c exit;'
 
 # chrome
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+
+# brew
+alias brew="env PATH=${PATH/${ANYENV_ROOT}/envs\/pyenv\/shims:?/} brew"
+
+# onelogin-aws-login
+alias oal='onelogin-aws-login -u ikezawa-ryota@c-fo.com'
+
+alias bcl="git bm | grep -v '*' | xargs -I % git branch -d %"

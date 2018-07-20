@@ -4,11 +4,12 @@ setopt no_global_rcs
 path=( \
     /usr/local/bin(N-/) \
     ~/bin(N-/) \
+    /usr/local/sbin(N-/) \
     ~/.zplug/bin(N-/) \
     ~/.tmux/bin(N-/) \
     "$path[@]" \
     )
-export PATH=~/.local/bin:$PATH
+export PATH=~/.local/bin:$GOPATH/bin:$PATH
 # zmodload zsh/zprof && zprof
 
 autoload -Uz run-help
@@ -50,7 +51,6 @@ export ENHANCD_FILTER=ENHANCD_FILTER=fzy:fzf:peco
 
 export ANYENV_ROOT=$HOME/.anyenv
 export GOPATH=$HOME
-export GOROOT=$ANYENV_ROOT/envs/goenv/versions/1.8.3
 export CONFIGURE_OPTS="--with-readline-dir=`brew --prefix readline` --with-openssl-dir=`brew --prefix openssl` --with-iconv-dir=`brew --prefix libiconv` --disable-install-rdoc"
 export CLICOLOR=true
 export LSCOLORS='exfxcxdxbxGxDxabagacad'

@@ -50,6 +50,7 @@ endif
 " プラグイン以外のその他設定が続く
 " :
 
+" initial settings
 filetype indent on
 filetype plugin indent on
 syntax on
@@ -57,6 +58,7 @@ scriptencoding utf-8
 syntax enable
 
 set number
+" set termguicolors
 set noswapfile
 set tabstop=2
 set shiftwidth=2
@@ -66,6 +68,10 @@ set clipboard^=unnamedplus
 set mouse-=a
 set list
 set listchars=tab:>-,trail:-
+set ambiwidth=double
+set fileencoding=utf-8
+set showmatch
+source $VIMRUNTIME/macros/matchit.vim
 
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
@@ -73,3 +79,16 @@ inoremap (<Enter> ()<Left><CR><ESC><S-o>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-n> :NERDTreeToggle<CR>
+
+if &term =~ "xterm"
+    let &t_SI .= "\e[?2004h"
+    let &t_EI .= "\e[?2004l"
+    let &pastetoggle = "\e[201~"
+
+    function XTermPasteBegin(ret)
+        set paste
+        return a:ret
+    endfunction
+
+    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+endif

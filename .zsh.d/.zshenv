@@ -17,15 +17,14 @@ autoload -Uz add-zsh-hook
 autoload -Uz colors && colors
 # autoload -Uz compinit && compinit -u -> comment out for speed-up
 autoload -Uz is-at-least
-autoload -Uz promptinit
-promptinit
-# prompt pure
+autoload -Uz promptinit; promptinit
+prompt pure
 
 
 # set dotfiles, zdotdir, zplug_home
 export DOTFILES=$HOME/.dotfiles
 export ZDOTDIR=$DOTFILES/.zsh.d
-export ZPLUG_HOME=$HOME/.zplug
+export ZPLUG_HOME=/usr/local/opt/zplug
 
 # openssl
 export LD_LIBRARY_PATH=/usr/local/opt/openssl/lib:$LD_LIBRARY_PATH
@@ -44,7 +43,7 @@ export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
 
 export VIM=/usr/local/Cellar/neovim/0.2.0_1/share/nvim
-export XDG_CONFIG_HOME=$DOTFILES/config
+export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export ENHANCD_COMMAND=ed
 export ENHANCD_FILTER=ENHANCD_FILTER=fzy:fzf:peco

@@ -2,6 +2,7 @@ umask 022
 limit coredumpsize 0
 bindkey -d
 
+echo "$DOTFILES"
 . $DOTFILES/etc/libs.zsh
 
 # loadfiles
